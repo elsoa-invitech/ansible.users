@@ -22,8 +22,7 @@
     update_password: '{{ item.update_password | default(omit) }}'
   with_items: '{{ users }}'
   no_log: >
-    '{{ true if item.password is defined or
-      item.authorized_keys is defined else false }}'
+    {{ true if item.password is defined or item.authorized_keys is defined else false }}
   tags:
     - configuration
 
@@ -37,8 +36,7 @@
   when: item.home_create is not defined or item.home_create
   with_items: '{{ users }}'
   no_log: >
-    '{{ true if item.password is defined or
-      item.authorized_keys is defined else false }}'
+    {{ true if item.password is defined or item.authorized_keys is defined else false }}
   tags:
     - configuration
 
@@ -53,8 +51,7 @@
   when: item.home_create is not defined or item.home_create
   with_items: '{{ users }}'
   no_log: >
-    '{{ true if item.password is defined or
-     item.authorized_keys is defined else false }}'
+    {{ true if item.password is defined or item.authorized_keys is defined else false }}
   tags:
     - configuration
 
@@ -67,7 +64,6 @@
   when: item.home_create is not defined or item.home_create
   with_items: '{{ users }}'
   no_log: >
-    '{{ true if item.password is defined
-     or item.authorized_keys is defined else false }}'
+    {{ true if item.password is defined or item.authorized_keys is defined else false }}
   tags:
     - configuration

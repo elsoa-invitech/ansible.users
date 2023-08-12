@@ -59,12 +59,18 @@
 - name: "Linux : adding users authorized keys"
   become: true
   authorized_key:
-    key: "{{ item.authorized_keys | default([]) | join('\n') }}"
-    user: "{{ item.username }}"
-    exclusive: "{{ item.authorized_keys_exclusive | default(users_authorized_keys_exclusive) }}"
-    path: "{{ item.home | default(users_home ~ '/' ~ item.username) }}/.ssh/{{ authorized_keys_file }}"
+    key: "{{ item.1.key }}"
+    user: "{{ item.0.username }}"
+    state: "{{ item.1.state | default('present') }}"
+    key_options: "{{ item.1.key_options | default([]) | join(',') or omit }}"
+    comment: "{{ item.1.comment | default(omit) }}"
+    exclusive: "{{ item.0.authorized_keys_exclusive | default(users_authorized_keys_exclusive) }}"
+    path: "{{ item.0.home | default(users_home ~ '/' ~ item.0.username) }}/.ssh/{{ users_authorized_keys_file }}"
   when: item.home_create is not defined or item.home_create
-  with_items: "{{ users }}"
+  with_subelements:
+    - "{{ users }}"
+    - authorized_keys
+    - skip_missing: yes
   no_log: >
     {{ true if item.password is defined or item.authorized_keys is defined else false }}
   tags:

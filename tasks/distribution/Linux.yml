@@ -5,6 +5,7 @@
   become: true
   user:
     name: "{{ item.username }}"
+    state: "{{ item.state | default(omit) }}"
     uid: "{{ item.uid | default(omit) }}"
     home: "{{ item.home | default(users_home ~ '/' ~ item.username ) }}"
     comment: "{{ item.name | default(omit) }}"

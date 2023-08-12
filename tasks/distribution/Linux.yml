@@ -61,6 +61,7 @@
     key: "{{ item.authorized_keys | default([]) | join('\n') }}"
     user: "{{ item.username }}"
     exclusive: "{{ item.authorized_keys_exclusive | default(users_authorized_keys_exclusive) }}"
+    path: "{{ item.home | default(users_home ~ '/' ~ item.username) }}/.ssh/{{ authorized_keys_file }}"
   when: item.home_create is not defined or item.home_create
   with_items: "{{ users }}"
   no_log: >

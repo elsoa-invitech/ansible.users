@@ -52,3 +52,5 @@ users_ssh_key_type: rsa
 users_ssh_key_bits: 2048
 # default user's setting for authorized keys exclusive
 users_authorized_keys_exclusive: "no"
+# default user's ssh authorized_keys file name
+users_authorized_keys_file: "authorized_keys"
